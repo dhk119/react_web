@@ -9,6 +9,7 @@ import MemberMain from "./components/member/MemberMain";
 import { useRecoilState } from "recoil";
 import { loginIdState, memberTypeState } from "./components/utils/RecoilData";
 import { useEffect } from "react";
+import BoardMain from "./components/board/BoardMain";
 // import { useState } from "react"; //리코일 Recoil 대체를 하기 위해서 안쓰임
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/member/*" element={<MemberMain />} />
           {/* 서브 라우터 쓰려면 /member/* 이렇게 해서 *을 사용하여 다음에 들어올 모든거를 표시해야 쓸 수 있음 */}
+          <Route path="/board/*" element={<BoardMain />} />
         </Routes>
       </main>
       <Footer />
