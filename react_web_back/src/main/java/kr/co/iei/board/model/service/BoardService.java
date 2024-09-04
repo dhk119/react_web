@@ -6,8 +6,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.board.model.dao.BoardDao;
+import kr.co.iei.board.model.dto.BoardDTO;
+import kr.co.iei.board.model.dto.BoardFileDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
@@ -30,5 +33,23 @@ public class BoardService {
 		map.put("list", list);
 		map.put("pi", pi);
 		return map;
+	}
+
+	@Transactional
+	public int insertBoard(BoardDTO board, List<BoardFileDTO> boardFileList) {
+		int result = boardDao.insertBoard(board); // 여기서 selectkey로 boardNo 보내줘서 이시점 이후 set으로 보내준다
+		
+		for(BoardFileDTO boardFile : boardFileList) {
+			boardFile.setBoardNo(board.getBoardNo());
+			result += boardDao.insertBoardFile(boardFile);
+		}
+		return result;
+	}
+
+	public BoardDTO selectOneBoard(int boardNo) {
+		BoardDTO board = boardDao.selectOneBoard(boardNo);
+//		List<BoardFileDTO> fileList = boardDao.selectOneBoardFileList(boardNo);
+//		board.setFileList(fileList);
+		return board;
 	} 
 }

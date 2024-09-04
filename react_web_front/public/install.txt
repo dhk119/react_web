@@ -8,3 +8,6 @@ npm install axios
 
 김대헌 2024-08-30 17:03
 npm install recoil
+
+김대헌 2024-09-04 13:48
+ npm install @toast-ui/react-editor --force

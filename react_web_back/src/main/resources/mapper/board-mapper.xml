@@ -16,4 +16,43 @@
 		        from board where board_status=1 order by board_no desc) b)
 		where rnum between #{start} and #{end}
   	</select>
+  	<insert id="insertBoard">
+  		insert into board values(board_seq.nextval,#{boardTitle},#{boardThumb},#{boardContent},#{boardWriter},1,sysdate)
+  		<selectKey resultType="int" keyProperty="boardNo" order="AFTER">
+  			select max(board_no) from board
+  		</selectKey>
+  	</insert>
+  	<insert id="insertBoardFile">
+  		insert into board_file values(board_file_seq.nextval,#{boardNo},#{filename},#{filepath})
+  	</insert>
+  	<select id="selectOneBoard" resultMap="getBoard">
+  		select
+  			board_no,
+  			board_title,
+  			board_thumb,
+  			board_content,
+  			board_writer,
+  			board_status,
+  			to_char(board_date,'yyyy-mm-dd') as board_date
+  		from board where board_no=#{boardNo}
+  	</select>
+  	<select id="selectOneBoardFileList" resultType="boardFile">
+  		select * from board_file where board_no=#{boardNo}
+  	</select>
+  	
+  	<resultMap type="board" id="getBoard">
+  		<result column="board_no" property="boardNo"/>
+  		<result column="board_title" property="boardTitle"/>
+  		<result column="board_content" property="boardContent"/>
+  		<result column="board_thumb" property="boardThumb"/>
+  		<result column="board_writer" property="boardWriter"/>
+  		<result column="board_status" property="boardStatus"/>
+  		<result column="board_date" property="boardDate"/>
+  		<collection property="fileList"
+  				select="selectOneBoardFileList"
+  				column="board_no"
+  				javaType="java.util.List"
+  				ofType="boardFile"
+  		/>
+  	</resultMap>
 </mapper>
