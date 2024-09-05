@@ -7,6 +7,7 @@ const ToastEditor = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const boardContent = props.boardContent;
   const setBoardContent = props.setBoardContent;
+  const type = props.type; //type 0 = 작성일때 type 1 = 수정 일때
   const editorRef = useRef(null); //Ref를 써서 Editor에 접근할 수 있는 권한을 준다
   const changeValue = () => {
     const editorData = editorRef.current.getInstance().getHTML();
@@ -30,7 +31,7 @@ const ToastEditor = (props) => {
   };
   return (
     <div style={{ width: "100%", marginTop: "20px" }}>
-      {boardContent || boardContent === "" ? (
+      {type === 0 || (type === 1 && boardContent !== "") ? (
         <Editor
           ref={editorRef}
           initialValue={boardContent}

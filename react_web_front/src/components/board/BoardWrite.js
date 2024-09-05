@@ -81,6 +81,7 @@ const BoardWrite = () => {
           <ToastEditor
             boardContent={boardContent}
             setBoardContent={setBoardContent}
+            type={0}
           />
         </div>
         <div className="button-zone">

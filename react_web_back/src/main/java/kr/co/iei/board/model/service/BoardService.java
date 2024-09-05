@@ -1,5 +1,6 @@
 package kr.co.iei.board.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,5 +52,47 @@ public class BoardService {
 //		List<BoardFileDTO> fileList = boardDao.selectOneBoardFileList(boardNo);
 //		board.setFileList(fileList);
 		return board;
+	}
+
+	public BoardFileDTO getBoardFile(int boardFileNo) {
+		BoardFileDTO boardFile = boardDao.getBoardFile(boardFileNo);
+		return boardFile;
+	}
+	
+	@Transactional
+	public List<BoardFileDTO> deleteBoard(int boardNo) {
+		//파일 조회 후 삭제
+		List<BoardFileDTO> fileList = boardDao.selectOneBoardFileList(boardNo);
+		int result = boardDao.deleteBoard(boardNo);
+		if(result>0) {
+			return fileList;
+		}else {
+			return null;
+		}
+	}
+
+	@Transactional
+	public List<BoardFileDTO> updateBoard(BoardDTO board, List<BoardFileDTO> boardFileList) {
+		int result = boardDao.updateBoard(board);
+		if(result>0) {
+			//삭제한 파일이 있으면 조회 후 삭제
+			List<BoardFileDTO> delFileList = new ArrayList<BoardFileDTO>();
+			if(board.getDelBoardFileNo() != null) {
+				delFileList = boardDao.selectBoardFile(board.getDelBoardFileNo());
+				result += boardDao.deleteBoardFile(board.getDelBoardFileNo());
+			}
+			//새 첨부파일이 있으면 새 첨부파일을 insert
+			for(BoardFileDTO boardFile : boardFileList) {
+				result += boardDao.insertBoardFile(boardFile);
+			}
+		
+			int updateTotal = board.getDelBoardFileNo() == null
+								? 1 + boardFileList.size()
+								: 1 + boardFileList.size() + board.getDelBoardFileNo().length;
+			if(result == updateTotal) {
+				return delFileList;
+			}
+		}
+		return null;
 	} 
 }

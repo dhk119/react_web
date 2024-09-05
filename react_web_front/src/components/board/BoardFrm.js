@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 
 const BoardFrm = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   const loginId = props.loginId;
   const boardTitle = props.boardTitle;
   const setBoardTitle = props.setBoardTitle;
@@ -8,7 +9,13 @@ const BoardFrm = (props) => {
   const setThumbnail = props.setThumbnail;
   const boardFile = props.boardFile;
   const setBoardFile = props.setBoardFile;
-
+  //수정인 경우에 추가로 전송되는 데이터 (마이페이지 수정 할때 적용 시키면 됨)
+  const boardThumb = props.boardThumb;
+  const setBoardThumb = props.setBoardThumb;
+  const fileList = props.fileList;
+  const setFileList = props.setFileList;
+  const delBoardFileNo = props.delBoardFileNo;
+  const setDelBoardFileNo = props.setDelBoardFileNo;
   const thumbnailRef = useRef(null);
   //썸네일 미리보기용 state(데이터전송하지 않음)
   const [boardImg, setBoardImg] = useState(null);
@@ -50,17 +57,24 @@ const BoardFrm = (props) => {
       <div className="board-thumb-wrap">
         {boardImg ? (
           <img
+            src={boardImg}
             onClick={() => {
               thumbnailRef.current.click();
             }}
-            src={boardImg}
+          />
+        ) : boardThumb ? (
+          <img
+            src={`${backServer}/board/thumb/${boardThumb}`}
+            onClick={() => {
+              thumbnailRef.current.click();
+            }}
           />
         ) : (
           <img
+            src="/image/default_img.png"
             onClick={() => {
               thumbnailRef.current.click();
             }}
-            src="/image/default_img.png"
           />
         )}
         <input
@@ -116,6 +130,34 @@ const BoardFrm = (props) => {
               <th>첨부파일 목록</th>
               <td>
                 <div className="board-file-wrap">
+                  {fileList
+                    ? fileList.map((boardFile, i) => {
+                        const deleteFile = () => {
+                          const newFileList = fileList.filter((item) => {
+                            return item !== boardFile;
+                          });
+                          setFileList(newFileList); //화면에 반영
+                          //Controller로 전송하기 위해서 배열에 추가
+                          setDelBoardFileNo([
+                            ...delBoardFileNo,
+                            boardFile.boardFileNo,
+                          ]);
+                        };
+                        return (
+                          <p key={"oldFile-" + i}>
+                            <span className="filename">
+                              {boardFile.filename}
+                            </span>
+                            <span
+                              className="material-icons del-file-icon"
+                              onClick={deleteFile}
+                            >
+                              delete
+                            </span>
+                          </p>
+                        );
+                      })
+                    : ""}
                   {showBoardFile.map((filename, i) => {
                     const deleteFile = () => {
                       boardFile.splice(i, 1);
