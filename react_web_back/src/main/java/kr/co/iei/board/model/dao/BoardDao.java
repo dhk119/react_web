@@ -32,5 +32,15 @@ public interface BoardDao {
 	List<BoardFileDTO> selectBoardFile(int[] delBoardFileNo);
 
 	int deleteBoardFile(int[] delBoardFileNo);
+	
+		
+	
+//	admin page
+
+	int adminTotal();
+
+	List adminBoardList(PageInfo pi);
+
+	int updateBoardStatus(BoardDTO board);
 
 }

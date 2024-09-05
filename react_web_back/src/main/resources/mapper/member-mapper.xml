@@ -23,4 +23,21 @@
 	<delete id="deleteMember">
 		delete from member_tbl where member_id=#{memberId}
 	</delete>
+	
+	<!-- admin page -->
+	<select id="adminTotalCount" resultType="int">
+		select count(*) from member_tbl
+	</select>
+	
+	<select id="adminMemberList" resultType="member">
+		select * from
+			(select rownum as rnum, m.* from
+				(select
+					member_id,
+					member_name,
+					member_phone,
+					member_type
+				from member_tbl order by member_name)m)
+		where rnum between #{start} and #{end}
+	</select>
 </mapper>
