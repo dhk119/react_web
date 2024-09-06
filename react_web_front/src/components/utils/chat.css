@@ -1,0 +1,77 @@
+.chat-wrap {
+  width: 600px;
+  margin: 0 auto;
+  align-self: center;
+}
+.login-info-box {
+  text-align: center;
+}
+.login-info-box > * {
+  display: block;
+  margin-bottom: 50px;
+}
+#chat-message {
+  width: 85%;
+  height: 50px;
+}
+#chat-message + button {
+  width: 15%;
+}
+
+.chat-message-area {
+  height: 500px;
+  background-color: #fff;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.info {
+  align-self: center;
+}
+.info > span {
+  font-size: 1.1em;
+  font-family: ns-b;
+}
+.chat {
+  max-width: 400px;
+  padding: 10px;
+}
+.chat.left {
+  align-self: flex-start;
+}
+.chat.right {
+  align-self: flex-end;
+}
+.user {
+  display: flex;
+}
+.user > span {
+  margin: 0 3px;
+}
+.right > .user {
+  flex-direction: row-reverse;
+}
+.user > .name {
+  font-size: 15px;
+}
+.chat-message {
+  padding: 7px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+.left > .chat-message {
+  margin-left: 20px;
+  border: 1px solid var(--main1);
+  color: var(--main1);
+}
+
+.right > .chat-message {
+  margin-right: 20px;
+  background-color: var(--main3);
+  color: var(--gray8);
+}

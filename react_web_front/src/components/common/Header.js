@@ -39,7 +39,7 @@ const MainNavi = () => {
           <Link to="/board/list">게시판</Link>
         </li>
         <li>
-          <Link to="#">메뉴2</Link>
+          <Link to="/chat">전체회원채팅</Link>
         </li>
         <li>
           <Link to="#">메뉴3</Link>
@@ -61,7 +61,6 @@ const HeaderLink = () => {
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
 
   const isLogin = useRecoilValue(isLoginState);
-  console.log("header : ", loginId, memberType, isLogin);
   const logout = () => {
     // setIsLogin(false);
     // setMemberId(null);

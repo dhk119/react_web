@@ -11,6 +11,7 @@ import { loginIdState, memberTypeState } from "./components/utils/RecoilData";
 import { useEffect } from "react";
 import BoardMain from "./components/board/BoardMain";
 import AdminMain from "./components/admin/AdminMain";
+import ChatMain from "./components/utils/ChatMain";
 // import { useState } from "react"; //리코일 Recoil 대체를 하기 위해서 안쓰임
 
 function App() {
@@ -35,7 +36,6 @@ function App() {
         .post(`${backServer}/member/refresh`)
         .then((res) => {
           //refresh토큰을 전송해서 로그인 정보를 새로 갱신해옴
-          console.log(res);
           setLoginId(res.data.memberId);
           setMemberType(res.data.memberType);
           axios.defaults.headers.common["Authorization"] = res.data.accessToken;
@@ -62,6 +62,7 @@ function App() {
           {/* 서브 라우터 쓰려면 /member/* 이렇게 해서 *을 사용하여 다음에 들어올 모든거를 표시해야 쓸 수 있음 */}
           <Route path="/board/*" element={<BoardMain />} />
           <Route path="/admin/*" element={<AdminMain />} />
+          <Route path="/chat" element={<ChatMain />} />
         </Routes>
       </main>
       <Footer />
