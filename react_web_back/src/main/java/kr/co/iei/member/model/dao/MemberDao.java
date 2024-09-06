@@ -29,4 +29,6 @@ public interface MemberDao {
 
 	List adminMemberList(PageInfo pi);
 
+	int updateMemberType(MemberDTO member);
+
 }
