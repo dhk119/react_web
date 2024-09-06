@@ -16,6 +16,9 @@ import kr.co.iei.chat.model.dto.ChatDTO;
 public class AllMemberChatHandler extends TextWebSocketHandler {
 	//전체채팅에 접속한 회원정보를 저장할 collection
 	private HashMap<WebSocketSession, String> members;
+	//전체가 다 접속 가능한 상태일때만 적용
+	//일대일 일대 다수 하려면 어려움
+	//react에 stomp 써야함 대신 라이브러리 다운 받아야함
 	
 	
 	public AllMemberChatHandler() {

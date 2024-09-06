@@ -63,6 +63,7 @@
   padding: 7px;
   border-radius: 5px;
   margin-top: 5px;
+  white-space: pre-wrap; /*글 남길때 엔터 먹히게 하는거 (전송이 아닌)*/
 }
 .left > .chat-message {
   margin-left: 20px;
